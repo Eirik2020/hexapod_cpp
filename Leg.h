@@ -20,7 +20,9 @@ public:
 
 
 	// Methods
-	std::vector<point3D> Gen_path_line(point3D P_start, vector3D V_direction, int res);
+	std::vector<point3D> Gen_path_line(const point3D& P_start, const vector3D& V_direction, int n);
+
+	std::vector<point3D> Gen_path_3PA(point3D P_start, vector3D V_direction, double h, int res);
 
 	void Mod_path(std::vector<point3D> path, int i_start);
 

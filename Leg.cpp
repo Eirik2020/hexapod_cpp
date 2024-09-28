@@ -5,22 +5,51 @@
 
 
 
-std::vector<point3D> Leg::Gen_path_line(point3D P_start, vector3D V_direction, int res) {
+std::vector<point3D> Leg::Gen_path_line(const point3D& P_start, const vector3D& V_direction, int n) {
     /*
     Generates a path of 3D points in a line from the starting location along the direction vector.
-    Returnes a std::vector. 
+    Returns a std::vector.
     */
-
-    // Normalize the direction vector and calculate the step size per increment
-    vector3D V_path_step = V_direction.normalized() * (V_direction.norm() / (res - 1));
-
-    // Generate vector containing line of 3D points
+    // Preallocate the vector to avoid dynamic resizing
     std::vector<point3D> line;
-    for (int i = 0; i < res; i++) {
-        line.push_back(P_start + V_path_step * i);
+    line.reserve(n);
+
+    // Calculate the normalized step size
+    vector3D V_path_step = V_direction / (n - 1);  // No need to normalize and multiply again
+
+    // Generate line of 3D points
+    for (int i = 0; i < n; ++i) {
+        line.emplace_back(P_start + V_path_step * i);
     }
     return line;
 }
+
+std::vector<point3D> Leg::Gen_path_3PA(point3D P_start, vector3D V_direction, double h, int n) {
+    /*
+    Generates a path of 3D points in a 3 point arch from the starting location along the direction vector.
+    Returnes a std::vector. 
+    */
+    std::vector<point3D> arch;
+    arch.reserve(n);
+
+    point3D P_end = P_start + V_direction;
+    point3D P_mid = (P_start + P_end) / 2.0;
+    P_mid.z() += h;  // Adjust the height of the midpoint
+
+    // Generate the arch points using a parametric quadratic equation
+    for (int i = 0; i < n; ++i) {
+        double t = static_cast<double>(i) / (n - 1);  // Parameter t ranges from 0 to 1
+        double one_minus_t = 1.0 - t;
+
+        point3D point = 
+            one_minus_t * one_minus_t * P_start 
+            + 2 * one_minus_t * t * P_mid 
+            + t * t * P_end;
+        arch.push_back(point);  
+    }
+    return arch;  // Return the vector of points
+}
+
 
 
 void Leg::Mod_path(std::vector<point3D> new_path, int i_start) {
