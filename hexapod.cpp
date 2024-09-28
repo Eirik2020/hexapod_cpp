@@ -1,21 +1,26 @@
 // hexapod.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-#include <iostream>
-#include <Eigen/Dense>  
-
-
-
-// Data type aliases
-typedef Eigen::Vector3d point3D; //[x,y,z] Stores 3D points 
-typedef Eigen::Vector3d vector3D; //(x,y,z) Stores 3D vectors
-
-
+#include "leg.h"
 
 
 int main()
 {
     std::cout << "Hello World!\n";
+
+    Leg leg1;
+    point3D P_start(0, 0, 0);
+    vector3D V_dir(10, 0, 0);
+    int res = 5;
+    int array_size = path_res;
+
+    std::vector<point3D> line1 = leg1.Gen_path_line(P_start, V_dir, res);
+    std::vector<point3D> line2 = leg1.Gen_path_line(P_start, V_dir, res);
+
+    leg1.Mod_path(line1, 0);
+    leg1.Mod_path(line2, 5);
+
+    leg1.display_path();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
