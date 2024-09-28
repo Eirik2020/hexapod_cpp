@@ -132,6 +132,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="hexapod.cpp" />
+    <ClCompile Include="Leg.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Leg.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
