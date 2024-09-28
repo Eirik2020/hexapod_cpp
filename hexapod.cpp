@@ -2,6 +2,16 @@
 //
 
 #include <iostream>
+#include <Eigen/Dense>  
+
+
+
+// Data type aliases
+typedef Eigen::Vector3d point3D; //[x,y,z] Stores 3D points 
+typedef Eigen::Vector3d vector3D; //(x,y,z) Stores 3D vectors
+
+
+
 
 int main()
 {
