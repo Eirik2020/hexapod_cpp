@@ -4,23 +4,29 @@
 #include "leg.h"
 
 
+
 int main()
 {
     std::cout << "Hello World!\n";
 
     Leg leg1;
     point3D P_start(0, 0, 0);
-    vector3D V_dir(10, 0, 0);
-    int res = 5;
+    vector3D V_D(10, 0, 0);
+    int n = 10;
+    double h = 10;
     int array_size = path_res;
+    vector3D vec(1.0, 0, 3.0);
 
-    std::vector<point3D> line1 = leg1.Gen_path_line(P_start, V_dir, res);
-    std::vector<point3D> line2 = leg1.Gen_path_line(P_start, V_dir, res);
+    vector3D vec2 = leg1.Rot_vec_z(vec, 3.14/2);
+
+    // Neatly print the vector as a row vector
+    std::cout << "Vector: " << vec2.transpose() << std::endl;
+
+    std::vector<point3D> line1 = leg1.Gen_path_3PA(P_start, V_D, h, n);
 
     leg1.Mod_path(line1, 0);
-    leg1.Mod_path(line2, 5);
 
-    leg1.display_path();
+    //leg1.display_path();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

@@ -5,6 +5,18 @@
 
 
 
+vector3D Leg::Rot_vec_z(const vector3D& vec, double angle) {
+    double cos_theta = std::cos(angle);
+    double sin_theta = std::sin(angle);
+
+    // Directly calculate the rotated vector components
+    double new_x = cos_theta * vec.x() - sin_theta * vec.y();
+    double new_y = sin_theta * vec.x() + cos_theta * vec.y();
+    double new_z = vec.z();  // Z remains unchanged
+
+    return vector3D(new_x, new_y, new_z);
+}
+
 std::vector<point3D> Leg::Gen_path_line(const point3D& P_start, const vector3D& V_direction, int n) {
     /*
     Generates a path of 3D points in a line from the starting location along the direction vector.
@@ -34,7 +46,7 @@ std::vector<point3D> Leg::Gen_path_3PA(point3D P_start, vector3D V_direction, do
 
     point3D P_end = P_start + V_direction;
     point3D P_mid = (P_start + P_end) / 2.0;
-    P_mid.z() += h;  // Adjust the height of the midpoint
+    P_mid.z() += (2*h);  // Adjust the height of the midpoint
 
     // Generate the arch points using a parametric quadratic equation
     for (int i = 0; i < n; ++i) {

@@ -3,6 +3,7 @@
 #include <Eigen/Dense>  
 #include <vector>
 #include <stdexcept> 
+#include <cmath>
 
 
 #define path_res 10 // Set path resolution, eg number of points between the start and end. 
@@ -20,6 +21,8 @@ public:
 
 
 	// Methods
+	vector3D Rot_vec_z(const vector3D& vec, double angle);
+
 	std::vector<point3D> Gen_path_line(const point3D& P_start, const vector3D& V_direction, int n);
 
 	std::vector<point3D> Gen_path_3PA(point3D P_start, vector3D V_direction, double h, int res);
