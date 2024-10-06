@@ -18,6 +18,8 @@ class Leg
 public:
 	point3D path_[path_res]; // Store coordinates of EF step path.
 	int path_res_ = path_res;
+	int id = 1;
+	double spacing = (3.14 * 2) / 6;
 
 
 	// Methods
@@ -30,6 +32,9 @@ public:
 	void Mod_path(std::vector<point3D> path, int i_start);
 
 	void display_path();
+
+	vector3D To_local_move_vector(const vector3D V_D, const vector3D V_T, double move_mag);
+
 
 };
 

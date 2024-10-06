@@ -108,3 +108,18 @@ void Leg::display_path() {
             << ") " << std::endl;
     }
 }
+
+vector3D Leg::To_local_move_vector(const vector3D V_D, const vector3D V_T, double move_mag) {
+    // Rotate direction vector to local frame
+    vector3D V_D_local = Rot_vec_z(V_D, (id * spacing));
+
+    // Normalize vectors and add up vectors.
+    V_D_local.normalize();
+    vector3D V_T_norm = V_T;
+    V_T_norm.normalize();
+    vector3D V_move = V_D_local + V_T_norm; 
+
+    // Normalize and multiply by the movement magnitude to set exact vector magnitude. 
+    V_move.normalize();
+    return (V_move * move_mag);
+}
