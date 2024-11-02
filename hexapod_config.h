@@ -20,7 +20,8 @@ typedef Eigen::Vector3d vector3D; //(x,y,z) Stores 3D vectors
 const double PI = 3.14; // Define pi
 
 // Communication configuration
-const std::string COM_PORT = "COM3";
+//const std::string COM_PORT = "COM3";
+const std::string COM_PORT = "/dev/ttyACM0";
 const unsigned int BAUD_RATE = 115200;
 
 // Robot configuration
