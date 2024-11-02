@@ -1,19 +1,23 @@
-# Compiler and flags
+# Compiler and compiler flags
 CXX = g++
-CXXFLAGS = -Wall -std=c++11 -I/usr/include/eigen3
+CXXFLAGS = -Wall -std=c++11 -I/usr/include/eigen3 -I/usr/include/boost
 
-# Source files
-SOURCES = main.cpp TCP_server.cpp Hexapod.cpp Maestro.cpp Leg.cpp
+# Linking flags for Boost libraries
+LDFLAGS = -lboost_system -lboost_serialization
+
+# Source files and target
+SOURCES = main.cpp TCP_server.cpp Hexapod.cpp Maestro.cpp Leg.cpp helper.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
 TARGET = hexapod_run
 
-# Default target
+# Default rule to build the program
 all: $(TARGET)
 
+# Link object files into the executable
 $(TARGET): $(OBJECTS)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJECTS)
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJECTS) $(LDFLAGS)
 
-# Rule to build .o files
+# Rule to compile each .cpp file to a .o file
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
