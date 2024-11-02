@@ -6,7 +6,7 @@ CXXFLAGS = -Wall -Wno-unused-variable -std=c++17 -I/usr/include/eigen3 -I/usr/in
 LDFLAGS = -lboost_system -lboost_serialization -lpthread
 
 # Source files and target
-SOURCES = Hexapod.cpp Leg.cpp Maestro.cpp main.cpp TCP_server.cpp helper.cpp
+SOURCES = hexapod.cpp Leg.cpp Maestro.cpp main.cpp TCP_server.cpp helper.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
 TARGET = hexapod_run
 
