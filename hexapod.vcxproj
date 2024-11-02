@@ -131,11 +131,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="hexapod.cpp" />
+    <ClCompile Include="Hexapod.cpp" />
+    <ClCompile Include="Maestro.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Leg.cpp" />
+    <ClCompile Include="TCP_server.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Hexapod.h" />
+    <ClInclude Include="hexapod_config.h" />
     <ClInclude Include="Leg.h" />
+    <ClInclude Include="Maestro.h" />
+    <ClInclude Include="TCP_server.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

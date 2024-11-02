@@ -1,21 +1,13 @@
 #include "Leg.h"
 
 
+// Constructor
+Leg::Leg(int id, point3D origin) : 
+    id(id),
+    origin_(origin),
+    P_EF_(P_DEF)
+{}
 
-
-
-
-vector3D Leg::Rot_vec_z(const vector3D& vec, double angle) {
-    double cos_theta = std::cos(angle);
-    double sin_theta = std::sin(angle);
-
-    // Directly calculate the rotated vector components
-    double new_x = cos_theta * vec.x() - sin_theta * vec.y();
-    double new_y = sin_theta * vec.x() + cos_theta * vec.y();
-    double new_z = vec.z();  // Z remains unchanged
-
-    return vector3D(new_x, new_y, new_z);
-}
 
 std::vector<point3D> Leg::Gen_path_line(const point3D& P_start, const vector3D& V_direction, int n) {
     /*
@@ -62,31 +54,57 @@ std::vector<point3D> Leg::Gen_path_3PA(point3D P_start, vector3D V_direction, do
     return arch;  // Return the vector of points
 }
 
-
-
-void Leg::Mod_path(std::vector<point3D> new_path, int i_start) {
+void Leg::Mod_path(const std::vector<point3D>& new_path, int i_start) {
     /*
-    Modifies the coordinate values stored in the path array in the Leg class. 
+    Modifies the coordinate values stored in the path array in the Leg class.
     */
-    int new_path_size = new_path.size();
-    int max_size = path_res;
-    int i_end = i_start + new_path_size - 1;
-    
+    size_t new_path_size = new_path.size();
+    size_t max_size = PATH_SIZE;
+    size_t i_end = i_start + new_path_size - 1;
+
     // Check if the input causes the pointer to fall off the array.
     if (i_start >= 0 && i_end < max_size) {
         // If input is valid
-        for (int i = 0; i < new_path_size; i++) {
+        for (size_t i = 0; i < new_path_size; i++) {
             path_[i_start + i] = new_path[i];
         }
     }
-
-    else if ( i_start < 0){
-        throw std::runtime_error("Starting index (i_start) must be greater than zero (i_start>0)!");
+    else if (i_start < 0) {
+        throw std::runtime_error("Starting index (i_start) must be greater than zero (i_start > 0)!");
     }
     else if (new_path_size > max_size) {
         throw std::runtime_error("Input std::vector too large!");
     }
-    else if ( (new_path_size + i_start) > max_size) {
+    else if ((new_path_size + i_start) > max_size) {
+        throw std::runtime_error("Input std::vector size and start index combination causes out of bounds!");
+    }
+    else {
+        throw std::runtime_error("Input failed test, cause unknown.");
+    }
+}
+
+void Leg::Mod_path_first(const std::vector<point3D>& new_path, int i_start) {
+    /*
+    Modifies the coordinate values stored in the first_step_ array in the Leg class.
+    */
+    size_t new_path_size = new_path.size();
+    size_t max_size = PATH_SIZE_HALF;
+    size_t i_end = i_start + new_path_size - 1;
+
+    // Check if the input causes the pointer to fall off the array.
+    if (i_start >= 0 && i_end < max_size) {
+        // If input is valid
+        for (size_t i = 0; i < new_path_size; i++) {
+            path_first_[i_start + i] = new_path[i];
+        }
+    }
+    else if (i_start < 0) {
+        throw std::runtime_error("Starting index (i_start) must be greater than zero (i_start > 0)!");
+    }
+    else if (new_path_size > max_size) {
+        throw std::runtime_error("Input std::vector too large!");
+    }
+    else if ((new_path_size + i_start) > max_size) {
         throw std::runtime_error("Input std::vector size and start index combination causes out of bounds!");
     }
     else {
@@ -96,30 +114,61 @@ void Leg::Mod_path(std::vector<point3D> new_path, int i_start) {
 
 void Leg::display_path() {
     /*
-    Displays the 3D points in the EF's path. 
+    Displays the 3D points in the EF's path as whole numbers.
     */
-    for (int i = 0; i < path_res_; ++i) {
-        std::cout 
-            << "Point " << i + 1 << ":" 
-            << " (" 
-            << path_[i].x() << ", " 
-            << path_[i].y() << ", " 
-            << path_[i].z() 
+    for (int i = 0; i < PATH_SIZE; ++i) {
+        std::cout
+            << "Point " << i + 1 << ":"
+            << " ("
+            << static_cast<int>(path_[i].x()) << ", "  // Cast x-coordinate to int
+            << static_cast<int>(path_[i].y()) << ", "  // Cast y-coordinate to int
+            << static_cast<int>(path_[i].z())          // Cast z-coordinate to int
             << ") " << std::endl;
     }
 }
 
-vector3D Leg::To_local_move_vector(const vector3D V_D, const vector3D V_T, double move_mag) {
-    // Rotate direction vector to local frame
-    vector3D V_D_local = Rot_vec_z(V_D, (id * spacing));
-
-    // Normalize vectors and add up vectors.
-    V_D_local.normalize();
-    vector3D V_T_norm = V_T;
-    V_T_norm.normalize();
-    vector3D V_move = V_D_local + V_T_norm; 
-
-    // Normalize and multiply by the movement magnitude to set exact vector magnitude. 
-    V_move.normalize();
-    return (V_move * move_mag);
+void Leg::display_path_first() {
+    /*
+    Displays the 3D points in the EF's path as whole numbers.
+    */
+    for (int i = 0; i < PATH_SIZE_HALF; ++i) {
+        std::cout
+            << "Point " << i + 1 << ":"
+            << " ("
+            << static_cast<int>(path_first_[i].x()) << ", "  // Cast x-coordinate to int
+            << static_cast<int>(path_first_[i].y()) << ", "  // Cast y-coordinate to int
+            << static_cast<int>(path_first_[i].z())          // Cast z-coordinate to int
+            << ") " << std::endl;
+    }
 }
+
+void Leg::Gen_move(const point3D& P_def, const vector3D& V_D, double h) {
+    // Calculate half direction vector
+    vector3D V_D_half = V_D / 2;
+
+    // Generate step
+    point3D P_start = P_def - V_D_half;
+    std::vector<point3D> path_step = Gen_path_3PA(P_start, V_D, h, PATH_SIZE_HALF);
+    Mod_path(path_step, 0);
+
+    // Generate half kick
+    point3D P_end = P_def + V_D_half;
+    std::vector<point3D> path_kick = Gen_path_line(P_end, -V_D, PATH_SIZE_HALF);
+    Mod_path(path_kick, PATH_SIZE_HALF);
+}
+
+void Leg::Gen_first_move(const point3D& P_def, const vector3D& V_D, double h) {
+    // Calculate quater direction vector.
+    vector3D V_D_half = V_D / 2;
+    int array_size = PATH_SIZE_QUART;
+
+    // Generate half step
+    std::vector<point3D> path_step = Gen_path_3PA(P_def, V_D_half, h, array_size);
+    Mod_path_first(path_step, 0);
+
+    // Generate half kick
+    std::vector<point3D> path_kick = Gen_path_line(P_def, -V_D_half, array_size);
+    Mod_path_first(path_kick, array_size);
+}
+
+

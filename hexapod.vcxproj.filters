@@ -15,15 +15,36 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="hexapod.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Leg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Hexapod.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Maestro.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TCP_server.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Leg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Hexapod.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hexapod_config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Maestro.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TCP_server.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
