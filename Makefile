@@ -1,6 +1,6 @@
 # Compiler and compiler flags
 CXX = g++
-CXXFLAGS = -Wall -std=c++11 -I/usr/include/eigen3 -I/usr/include/boost
+CXXFLAGS = -Wall -std=c++23 -I/usr/include/eigen3 -I/usr/include/boost
 
 # Linking flags for Boost libraries
 LDFLAGS = -lboost_system -lboost_serialization
