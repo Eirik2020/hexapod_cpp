@@ -2,7 +2,7 @@
 CXX = g++
 CXXFLAGS = -Wall -std=c++20 -I/usr/include/eigen3 -I/usr/include/boost
 
-# Linking flags for Boost libraries
+# Linking flags for Boost libraries 
 LDFLAGS = -lboost_system -lboost_serialization
 
 # Source files and target
