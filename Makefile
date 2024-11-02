@@ -1,9 +1,9 @@
 # Compiler and compiler flags
 CXX = g++
-CXXFLAGS = -Wall -std=c++20 -I/usr/include/eigen3 -I/usr/include/boost
+CXXFLAGS = -Wall -Wno-unused-variable -std=c++20 -I/usr/include/eigen3 -I/usr/include/boost
 
-# Linking flags for Boost libraries 
-LDFLAGS = -lboost_system -lboost_serialization
+# Linking flags for Boost libraries (and pthread if needed)
+LDFLAGS = -lboost_system -lboost_serialization -lpthread
 
 # Source files and target
 SOURCES = main.cpp TCP_server.cpp Hexapod.cpp Maestro.cpp Leg.cpp helper.cpp
