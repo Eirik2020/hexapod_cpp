@@ -38,6 +38,7 @@ int main() {
             case 'w': // Walk forward.
                 std::cout << "Received 'w': Moving forward..." << std::endl;
                 V_D = { 0, 1, 0 }; // Set direction vector to forward.
+                V_T = { 0, 0, 0 };
                 robot.Init_walk(V_D, V_T); // Initalize movement path.
 
                 // Execute move
@@ -47,6 +48,7 @@ int main() {
             case 's':
                 std::cout << "Received 's': Moving backwards..." << std::endl;
                 V_D = { 0, -1, 0 }; // Set direction vector to backwards.
+                V_T = { 0, 0, 0 };
                 robot.Init_walk(V_D, V_T); // Initalize movement path.
 
                 // Execute move
@@ -55,7 +57,8 @@ int main() {
                 break;
             case 'a':
                 std::cout << "Received 'a': Moving left..." << std::endl;
-                V_D = { 1, 0, 0 }; // Set direction vector to left.
+                V_D = { 0, 0, 0 }; // Set direction vector to left.
+                V_T = { 0, 1, 0 };
                 robot.Init_walk(V_D, V_T); // Initalize movement path.
 
                 // Execute move
@@ -64,7 +67,8 @@ int main() {
                 break;
             case 'd':
                 std::cout << "Received 'd': Moving right..." << std::endl;
-                V_D = { -1, 0, 0 }; // Set direction vector to right.
+                V_D = { 0, 0, 0 }; // Set direction vector to right.
+                V_T = { 0, -1, 0 };
                 robot.Init_walk(V_D, V_T); // Initalize movement path.
 
                 // Execute move
